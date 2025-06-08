@@ -9,18 +9,14 @@ license=('MIT')
 depends=('nodejs' 'npm' 'python' 'python-pip' 'python-flask' 'python-flask-cors')
 makedepends=('npm' 'nodejs' 'python-pip')
 source=(
-  'backend'
-  'frontend'
   'linux/install.sh'
   'linux/notebox.desktop'
   'linux/icon.png'
 )
-noextract=('backend' 'frontend')
 
-build() {
-  cd "$srcdir/frontend"
-  npm install
-  npm run build
+prepare() {
+  cp -r ../backend "$srcdir/backend"
+  cp -r ../frontend "$srcdir/frontend"
 }
 
 package() {
