@@ -1,0 +1,22 @@
+# Maintainer: MrGraf <your-email@example.com>
+pkgname=notebox
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Markdown notes app"
+arch=('x86_64')
+url="https://github.com/MrGrafGitHub/notebox"
+license=('MIT')
+depends=('nodejs' 'npm')
+source=()
+md5sums=()
+
+package() {
+  cd "$srcdir"
+
+  # Копируем файлы в папку пакета
+  install -Dm755 notebox.desktop "$pkgdir/usr/share/applications/notebox.desktop"
+  install -Dm755 install.sh "$pkgdir/usr/bin/notebox-install.sh"
+
+  mkdir -p "$pkgdir/opt/notebox"
+  cp -r ./* "$pkgdir/opt/notebox/"
+}
