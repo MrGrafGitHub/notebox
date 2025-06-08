@@ -6,20 +6,22 @@ arch=('x86_64')
 url="https://github.com/MrGrafGitHub/notebox"
 license=('MIT')
 
-depends=('python' 'python-pip' 'python-flask' 'python-flask-cors' 'nodejs')  # npm не runtime, но nodejs нужен для запуска backend
+depends=('python' 'python-pip' 'python-flask' 'python-flask-cors' 'nodejs')
 makedepends=('npm' 'nodejs' 'python-pip')
 
 source=(
+  'backend'
+  'frontend'
   'install.sh'
   'notebox.desktop'
   'icon.png'
 )
 
-noextract=('install.sh' 'notebox.desktop' 'icon.png')
+noextract=('backend' 'frontend')
 
 prepare() {
-  cp -r ../backend "$srcdir/backend"
-  cp -r ../frontend "$srcdir/frontend"
+  cp -r backend "$srcdir/backend"
+  cp -r frontend "$srcdir/frontend"
 }
 
 build() {
