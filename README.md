@@ -2,21 +2,31 @@
 
 
 ```
-notebox/
-├── backend/
-│   ├── app.py                  # Flask-приложение
-│   ├── db.py                   # Работа с SQLCipher
-│   └── config.py               # Путь к базе и пароль
-├── frontend/
-│   ├── public/                 # HTML-шаблон
-│   └── src/
-│	├── App.jsx
-│	├── components/
-│	│   ├── Editor.jsx
-│	│   └── NoteList.jsx
-│	├── api.js
-│	├── index.css
-│	└── main.jsx
-├── notes.db                    # Защищённая база SQLCipher (в YandexDisk)
-└── README.md
+backend/
+    __pycache__/
+        config.py
+        create_db.py
+    app.py
+    db.py
+    notes.db
+    requirements — копия.txt
+    requirements.txt
+frontend/
+    public/
+        index.html
+    src/
+        index.html
+        package-lock.json
+        package.json
+        postcss.config.js
+        tailwind.config.js
+        vite.config.js
+windows/
+    start.bat
+PKGBUILD
+icon.png
+install.sh
+notebox.desktop
+.gitignore
+README.md
 ```
