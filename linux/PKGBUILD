@@ -1,29 +1,32 @@
-# Maintainer: MrGraf 
 pkgname=notebox
 pkgver=1.0.0
 pkgrel=1
-pkgdesc="Markdown notes app"
+pkgdesc="Markdown notes app with backend and frontend"
 arch=('x86_64')
 url="https://github.com/MrGrafGitHub/notebox"
 license=('MIT')
-
-depends=('nodejs' 'python' 'python-flask' 'python-flask-cors')
-makedepends=('npm')
-
-source=("https://github.com/MrGrafGitHub/notebox/archive/refs/tags/v${pkgver}.tar.gz")
-md5sums=('SKIP')
+depends=('nodejs' 'npm' 'python' 'python-flask' 'python-flask-cors' 'sqlcipher')
+makedepends=('git' 'npm')
+source=()
+md5sums=()
 
 build() {
-  cd "$srcdir/notebox-$pkgver/frontend"
+  cd "$srcdir/frontend"
   npm install
   npm run build
 }
 
 package() {
-  cd "$srcdir/notebox-$pkgver"
+  cd "$srcdir"
+  mkdir -p "$pkgdir/opt/notebox"
+
+  # Копируем backend
+  cp -r backend "$pkgdir/opt/notebox/"
+
+  # Копируем frontend сборку (предполагается, что после npm run build - файлы в frontend/dist или build)
+  cp -r frontend/build "$pkgdir/opt/notebox/frontend/"
+
+  # Копируем дополнительные файлы
   install -Dm644 linux/notebox.desktop "$pkgdir/usr/share/applications/notebox.desktop"
   install -Dm755 linux/install.sh "$pkgdir/usr/bin/notebox-install.sh"
-
-  mkdir -p "$pkgdir/opt/notebox"
-  cp -r frontend/build backend "$pkgdir/opt/notebox/"
 }
