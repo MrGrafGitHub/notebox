@@ -1,0 +1,13 @@
+# Node.js
+node_modules/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# MacOS (если надо)
+.DS_Store
+
+# Логи
+*.log
