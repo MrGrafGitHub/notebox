@@ -9,7 +9,7 @@ notebox/
 │   └── config.py               # Путь к базе и пароль
 ├── frontend/
 │   ├── public/                 # HTML-шаблон
-│   ├── src/
+│   └── src/
 │	├── App.jsx
 │	├── components/
 │	│   ├── Editor.jsx
