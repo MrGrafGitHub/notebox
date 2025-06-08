@@ -1,12 +1,12 @@
 pkgname=notebox
 pkgver=1.0.0
 pkgrel=1
-pkgdesc="Markdown notes app with backend and frontend"
+pkgdesc="Markdown notes app with Flask backend and Vite+React frontend"
 arch=('x86_64')
 url="https://github.com/MrGrafGitHub/notebox"
 license=('MIT')
 depends=('nodejs' 'npm' 'python' 'python-flask' 'python-flask-cors' 'sqlcipher')
-makedepends=('git' 'npm')
+makedepends=('npm' 'python-pip')
 source=()
 md5sums=()
 
@@ -18,15 +18,19 @@ build() {
 
 package() {
   cd "$srcdir"
-  mkdir -p "$pkgdir/opt/notebox"
+  
+  # Создаём папки
+  mkdir -p "$pkgdir/opt/notebox/backend"
+  mkdir -p "$pkgdir/opt/notebox/frontend"
 
-  # Копируем backend
-  cp -r backend "$pkgdir/opt/notebox/"
+  # Копируем backend (исключая __pycache__ и notes.db — БД можно отдельным файлом держать)
+  rsync -av --exclude='__pycache__' --exclude='notes.db' backend/ "$pkgdir/opt/notebox/backend/"
 
-  # Копируем frontend сборку (предполагается, что после npm run build - файлы в frontend/dist или build)
-  cp -r frontend/build "$pkgdir/opt/notebox/frontend/"
+  # Копируем frontend сборку (vite обычно кладёт сборку в dist/)
+  cp -r frontend/dist "$pkgdir/opt/notebox/frontend/"
 
-  # Копируем дополнительные файлы
-  install -Dm644 linux/notebox.desktop "$pkgdir/usr/share/applications/notebox.desktop"
+  # Копируем файлы для запуска
   install -Dm755 linux/install.sh "$pkgdir/usr/bin/notebox-install.sh"
+  install -Dm644 linux/notebox.desktop "$pkgdir/usr/share/applications/notebox.desktop"
+  install -Dm644 linux/icon.png "$pkgdir/usr/share/pixmaps/notebox.png"
 }
